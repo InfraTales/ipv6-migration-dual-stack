@@ -1,0 +1,24 @@
+```mermaid
+sequenceDiagram
+    participant Client as IPv6 Client
+    participant DNS as DNS64 Resolver
+    participant App as Application
+    participant NAT64 as NAT64 Gateway
+    participant Legacy as IPv4-Only Service
+
+    Note over Client,Legacy: Accessing IPv6-native service
+    Client->>DNS: Resolve api.example.com
+    DNS-->>Client: AAAA record (native IPv6)
+    Client->>App: Connect via IPv6
+    App-->>Client: Response
+
+    Note over Client,Legacy: Accessing IPv4-only service
+    Client->>DNS: Resolve legacy.example.com
+    DNS->>DNS: No AAAA, synthesize via DNS64
+    DNS-->>Client: Synthesized AAAA (64:ff9b::x.x.x.x)
+    Client->>NAT64: Connect to synthesized address
+    NAT64->>NAT64: Translate IPv6 to IPv4
+    NAT64->>Legacy: Connect via IPv4
+    Legacy-->>NAT64: Response
+    NAT64-->>Client: Translated response
+```

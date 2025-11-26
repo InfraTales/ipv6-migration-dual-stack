@@ -1,0 +1,43 @@
+```mermaid
+graph TD
+    subgraph Internet["Internet"]
+        IPv6Client[IPv6 Clients]
+        IPv4Client[IPv4 Clients]
+    end
+
+    subgraph Edge["Edge Layer"]
+        ALB[Application Load Balancer<br/>Dual-Stack]
+        CloudFront[CloudFront<br/>IPv6 Enabled]
+    end
+
+    subgraph VPC["Dual-Stack VPC"]
+        subgraph Public["Public Subnets"]
+            NAT64[NAT64 Gateway]
+            NATGW[NAT Gateway<br/>IPv4 Legacy]
+        end
+        
+        subgraph Private["Private Subnets"]
+            App[Application Tier<br/>Dual-Stack]
+            DB[Database Tier<br/>IPv6-Only]
+        end
+        
+        DNS64[Route 53 Resolver<br/>DNS64]
+    end
+
+    subgraph External["External Services"]
+        IPv6Service[IPv6 Services]
+        IPv4Service[IPv4-Only Services]
+    end
+
+    IPv6Client --> CloudFront
+    IPv4Client --> CloudFront
+    CloudFront --> ALB
+    ALB --> App
+    App --> DB
+    App --> IPv6Service
+    App --> DNS64
+    DNS64 --> NAT64
+    NAT64 --> IPv4Service
+    App --> NATGW
+    NATGW --> IPv4Service
+```

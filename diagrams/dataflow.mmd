@@ -1,0 +1,38 @@
+```mermaid
+graph LR
+    subgraph Phase1["Phase 1: Dual-Stack"]
+        DS_VPC[Dual-Stack VPC]
+        DS_Subnet[Dual-Stack Subnets]
+        DS_SG[Updated Security Groups]
+    end
+
+    subgraph Phase2["Phase 2: Application"]
+        App_LB[Dual-Stack Load Balancers]
+        App_EC2[Dual-Stack Instances]
+        App_Config[Application Config]
+    end
+
+    subgraph Phase3["Phase 3: Translation"]
+        NAT64[NAT64 Gateway]
+        DNS64[DNS64 Resolver]
+        Legacy[Legacy IPv4 Access]
+    end
+
+    subgraph Phase4["Phase 4: IPv6-Only"]
+        IPv6_Subnet[IPv6-Only Subnets]
+        IPv6_Workloads[IPv6-Only Workloads]
+        Cost_Savings[Cost Optimization]
+    end
+
+    DS_VPC --> DS_Subnet
+    DS_Subnet --> DS_SG
+    DS_SG --> App_LB
+    App_LB --> App_EC2
+    App_EC2 --> App_Config
+    App_Config --> NAT64
+    NAT64 --> DNS64
+    DNS64 --> Legacy
+    Legacy --> IPv6_Subnet
+    IPv6_Subnet --> IPv6_Workloads
+    IPv6_Workloads --> Cost_Savings
+```
