@@ -111,4 +111,4 @@ Common issues and resolutions for the **IPv6 Migration Dual-Stack** architecture
 - Prioritize IPv6 migration for those services
 - Consider direct IPv4 connectivity for exceptions
 
-> For architecture details, see `ARCHITECTURE.md`.
+> For architecture details, see the project README.

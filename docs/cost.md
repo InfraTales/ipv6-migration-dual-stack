@@ -44,4 +44,4 @@ IPv6 migration can reduce costs:
 
 ## Related Documentation
 
-See `ARCHITECTURE.md` for service details and `DEPLOYMENT.md` for migration guide.
+See the project README for architecture details.md` for migration guide.

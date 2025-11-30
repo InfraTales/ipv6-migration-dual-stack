@@ -279,7 +279,7 @@ pulumi version     # >= 3.90.0
 
 ### Quick Deploy
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed deployment instructions.
+Refer to the Architecture section above for deployment details.
 
 **Development Environment:**
 ```bash
