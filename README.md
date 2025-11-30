@@ -369,9 +369,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines
 
 ## 👤 Author
 
-**Rahul Ladumor**
+**Rahul Ladumor** - Founder of InfraTales
 - 🌐 Portfolio: [rahulladumor.in](https://www.rahulladumor.in)
+- ☁️ Blog: [acloudwithrahul.in](https://www.acloudwithrahul.in)
 - 💼 GitHub: [@rahulladumor](https://github.com/rahulladumor)
+- 🏢 Organization: [InfraTales](https://github.com/InfraTales)
 - 📧 Email: rahul.ladumor@infratales.com
 - 💬 LinkedIn: [www.linkedin.com/in/rahulladumor](https://www.linkedin.com/in/rahulladumor)
 
