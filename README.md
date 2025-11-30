@@ -370,10 +370,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines
 ## 👤 Author
 
 **Rahul Ladumor**
-- 🌐 Portfolio: [acloudwithrahul.in](https://acloudwithrahul.in)
+- 🌐 Portfolio: [rahulladumor.in](https://www.rahulladumor.in)
 - 💼 GitHub: [@rahulladumor](https://github.com/rahulladumor)
-- 📧 Email: rahuldladumor@gmail.com
-- 💬 LinkedIn: [linkedin.com/in/rahulladumor](https://linkedin.com/in/rahulladumor)
+- 📧 Email: rahul.ladumor@infratales.com
+- 💬 LinkedIn: [www.linkedin.com/in/rahulladumor](https://www.linkedin.com/in/rahulladumor)
 
 ---
 
