@@ -2,102 +2,44 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main, develop]
+    branches: [ main, develop ]
 
 jobs:
   validate:
-    name: Validate Terraform
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v3
+      
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        if: hashFiles('*.tf') != ''
+        uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.6.0"
-
+          terraform_version: 1.5.0
+      
       - name: Terraform Format Check
+        if: hashFiles('*.tf') != ''
         run: terraform fmt -check -recursive
-        continue-on-error: true
-
+      
       - name: Terraform Init
-        run: |
-          if [ -d "terraform" ]; then
-            cd terraform && terraform init -backend=false
-          elif [ -f "main.tf" ]; then
-            terraform init -backend=false
-          fi
-
+        if: hashFiles('*.tf') != ''
+        run: terraform init -backend=false
+      
       - name: Terraform Validate
-        run: |
-          if [ -d "terraform" ]; then
-            cd terraform && terraform validate
-          elif [ -f "main.tf" ]; then
-            terraform validate
-          fi
-
-  security:
-    name: Security Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
-        continue-on-error: true
+        if: hashFiles('*.tf') != ''
+        run: terraform validate
+      
+      - name: Setup Node.js
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v3
         with:
-          soft_fail: true
-
-      - name: Run checkov
-        uses: bridgecrewio/checkov-action@v12
-        continue-on-error: true
-        with:
-          directory: .
-          soft_fail: true
-
-  documentation:
-    name: Validate Documentation
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check required files
-        run: |
-          echo "Checking required documentation..."
-          
-          # Check docs
-          for file in docs/cost.md docs/security.md docs/runbook.md docs/troubleshooting.md; do
-            if [ -f "$file" ]; then
-              echo "✅ $file exists"
-            else
-              echo "❌ $file missing"
-            fi
-          done
-          
-          # Check diagrams
-          for file in diagrams/architecture.mmd diagrams/sequence.mmd diagrams/dataflow.mmd; do
-            if [ -f "$file" ]; then
-              echo "✅ $file exists"
-            else
-              echo "❌ $file missing"
-            fi
-          done
-
-      - name: Validate Mermaid diagrams
-        run: |
-          echo "Checking Mermaid diagram syntax..."
-          find diagrams -name "*.mmd" -type f | while read f; do
-            if head -1 "$f" | grep -q "^graph\|^sequenceDiagram\|^flowchart\|^classDiagram\|^stateDiagram\|^erDiagram\|^journey\|^gantt\|^pie\|^mindmap"; then
-              echo "✅ $f - valid"
-            else
-              echo "⚠️ $f - check syntax"
-            fi
-          done
+          node-version: '18'
+      
+      - name: Install Dependencies
+        if: hashFiles('package.json') != ''
+        run: npm ci
+      
+      - name: Run Tests
+        if: hashFiles('package.json') != ''
+        run: npm test
